@@ -15,6 +15,8 @@ import java.util.Set;
                             })
 public class User implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -30,6 +32,20 @@ public class User implements Serializable {
 
     @Size(max = 120)
     private String email;
+
+    @OneToOne(mappedBy = "users",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            optional = true)
+    private Shop shop;
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
